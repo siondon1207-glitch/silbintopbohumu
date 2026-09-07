@@ -1300,31 +1300,74 @@
 <footer id="master-footer" class="wf-footer" role="contentinfo">
   <div class="wf-inner">
     
-    <!-- 1. 내부 신뢰도 링크 (nofollow 제거, 로봇 친화적 실제 경로 사용) -->
-    <!-- ※ 실제 페이지가 없을 경우 링크(<a>) 대신 <button> 형태나 실존 페이지만 남겨두어야 404 크롤링 감점을 방지합니다. -->
+    <!-- 1. SEO 안전 안내 링크 (모달 방식으로 404 크롤링 에러 0건 보장) -->
     <nav class="wf-nav" aria-label="사이트 이용 안내">
-      <a href="/privacy/">개인정보처리방침</a>
+      <button type="button" class="wf-link-btn" onclick="wfOpenModal('wf-modal-privacy')">개인정보처리방침</button>
       <span class="wf-sep" aria-hidden="true">|</span>
-      <a href="/terms/">이용약관</a>
+      <button type="button" class="wf-link-btn" onclick="wfOpenModal('wf-modal-terms')">이용약관</button>
       <span class="wf-sep" aria-hidden="true">|</span>
-      <a href="/about/">사이트 소개</a>
+      <button type="button" class="wf-link-btn" onclick="wfOpenModal('wf-modal-about')">사이트 소개</button>
     </nav>
 
-    <!-- 2. 신뢰성 표시 (과장된 애니메이션 대신 신뢰할 수 있는 운영 상태 표시) -->
+    <!-- 2. 신뢰성 표시 -->
     <div class="wf-status" role="status">
       <span class="wf-dot" aria-hidden="true"></span>
       <span>정상 서비스 제공 중</span>
     </div>
 
-    <!-- 3. 저작권 (No-JS 상태에서도 네이버 봇이 즉시 읽을 수 있는 완성형 텍스트) -->
+    <!-- 3. 저작권 (KST 연도 및 사이트명 자동 동기화) -->
     <div class="wf-copy">
       <small>© <span class="wf-year">2026</span> <span class="wf-brand">Website</span>. All rights reserved.</small>
     </div>
 
   </div>
 
+  <!-- [내장 팝업 1] 개인정보처리방침 (별도 페이지 없이도 법적/신뢰성 요건 충족) -->
+  <dialog id="wf-modal-privacy" class="wf-dialog" aria-labelledby="wf-priv-title">
+    <div class="wf-dialog-box">
+      <div class="wf-dialog-header">
+        <h3 id="wf-priv-title">개인정보처리방침</h3>
+        <button type="button" class="wf-close-btn" onclick="wfCloseModal('wf-modal-privacy')" aria-label="닫기">&times;</button>
+      </div>
+      <div class="wf-dialog-body">
+        <p>본 사이트는 이용자의 개인정보를 중요시하며, 관련 법령을 준수하고 있습니다.</p>
+        <p>1. <strong>수집 항목:</strong> 서비스 이용 과정에서 생성되는 쿠키, IP 주소 및 통계 데이터</p>
+        <p>2. <strong>이용 목적:</strong> 사이트 성능 개선, 통계 분석 및 비정상적 트래픽 차단</p>
+        <p>3. <strong>보관 기간:</strong> 수집 및 이용 목적 달성 시 지체 없이 파기합니다.</p>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- [내장 팝업 2] 이용약관 -->
+  <dialog id="wf-modal-terms" class="wf-dialog" aria-labelledby="wf-terms-title">
+    <div class="wf-dialog-box">
+      <div class="wf-dialog-header">
+        <h3 id="wf-terms-title">이용약관</h3>
+        <button type="button" class="wf-close-btn" onclick="wfCloseModal('wf-modal-terms')" aria-label="닫기">&times;</button>
+      </div>
+      <div class="wf-dialog-body">
+        <p>본 사이트가 제공하는 모든 콘텐츠는 참고용 정보이며, 무단 복제 및 전재를 금지합니다.</p>
+        <p>이용자는 관련 법령과 공서양속을 준수하여 사이트를 이용해야 합니다.</p>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- [내장 팝업 3] 사이트 소개 -->
+  <dialog id="wf-modal-about" class="wf-dialog" aria-labelledby="wf-about-title">
+    <div class="wf-dialog-box">
+      <div class="wf-dialog-header">
+        <h3 id="wf-about-title">사이트 소개</h3>
+        <button type="button" class="wf-close-btn" onclick="wfCloseModal('wf-modal-about')" aria-label="닫기">&times;</button>
+      </div>
+      <div class="wf-dialog-body">
+        <p>본 사이트는 유용한 정보를 빠르고 정확하게 제공하기 위해 운영되는 플랫폼입니다.</p>
+        <p>항상 안정적이고 최적화된 웹 환경을 제공하도록 최선을 다하겠습니다.</p>
+      </div>
+    </div>
+  </dialog>
+
   <style>
-    /* 로봇의 Core Web Vitals(CLS 0점) 및 접근성을 위한 초경량 CSS */
+    /* 초경량 & 무결점 반응형 CSS */
     .wf-footer {
       background: #f8f9fa;
       border-top: 1px solid #e9ecef;
@@ -1338,14 +1381,13 @@
       width: 100%;
     }
     @media (prefers-color-scheme: dark) {
-      .wf-footer {
-        background: #181a1b;
-        border-top-color: #2c3032;
-        color: #9aa0a6;
-      }
-      .wf-footer .wf-nav a { color: #bdc1c6; }
+      .wf-footer { background: #181a1b; border-top-color: #2c3032; color: #9aa0a6; }
+      .wf-footer .wf-link-btn { color: #bdc1c6; }
       .wf-footer .wf-copy { color: #80868b; }
       .wf-footer .wf-status { background: #202425; border-color: #2c3032; }
+      .wf-dialog-box { background: #222629; color: #e8eaed; }
+      .wf-dialog-header { border-bottom-color: #33383b; }
+      .wf-close-btn { color: #e8eaed; }
     }
     .wf-inner {
       max-width: 960px;
@@ -1353,7 +1395,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
     .wf-nav {
       display: flex;
@@ -1362,13 +1404,18 @@
       align-items: center;
       gap: 8px;
     }
-    .wf-nav a {
-      color: #495057;
-      text-decoration: none;
+    /* 링크처럼 보이는 시맨틱 버튼 스타일 */
+    .wf-link-btn {
+      background: none;
+      border: none;
+      padding: 0;
       font-size: 12px;
       font-weight: 500;
+      color: #495057;
+      cursor: pointer;
+      font-family: inherit;
     }
-    .wf-nav a:hover {
+    .wf-link-btn:hover {
       text-decoration: underline;
     }
     .wf-sep {
@@ -1399,12 +1446,72 @@
     .wf-copy small {
       font-size: 100%;
     }
+
+    /* 네이티브 다이얼로그(모달) 스타일 */
+    .wf-dialog {
+      border: none;
+      border-radius: 12px;
+      padding: 0;
+      max-width: 480px;
+      width: 90%;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    .wf-dialog::backdrop {
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(2px);
+    }
+    .wf-dialog-box {
+      background: #ffffff;
+      padding: 20px;
+      text-align: left;
+    }
+    .wf-dialog-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e9ecef;
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+    }
+    .wf-dialog-header h3 {
+      margin: 0;
+      font-size: 16px;
+      color: inherit;
+    }
+    .wf-close-btn {
+      background: none;
+      border: none;
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+      color: #6c757d;
+    }
+    .wf-dialog-body {
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .wf-dialog-body p {
+      margin: 6px 0;
+    }
   </style>
 
   <script>
+  // 모달 열기/닫기 전역 함수
+  function wfOpenModal(id) {
+    var modal = document.getElementById(id);
+    if (modal && typeof modal.showModal === 'function') {
+      modal.showModal();
+    }
+  }
+  function wfCloseModal(id) {
+    var modal = document.getElementById(id);
+    if (modal && typeof modal.close === 'function') {
+      modal.close();
+    }
+  }
+
   (function() {
     'use strict';
-    // 크롤러가 DOM을 읽는 도중 레이아웃 시프트(CLS)를 발생시키지 않는 안전한 보정 로직
     try {
       // 1. KST 기준 연도 산출
       var now = new Date();
@@ -1414,45 +1521,37 @@
         year = fmt.format(now).replace(/[^0-9]/g, '');
       } catch (err) {}
 
-      // 2. 브랜드명 정밀 판별 (네이버/구글 메타태그 기반)
+      // 2. 브랜드명 자동 감지
       var brand = '';
-      
-      // 최우선: og:site_name (네이버 서치어드바이저 권장 메타)
       var ogMeta = document.querySelector('meta[property="og:site_name"]');
       if (ogMeta && ogMeta.content) {
         brand = ogMeta.content.trim();
       }
-
-      // 차선책: document.title에서 사이트 고유명만 정밀 추출
       if (!brand && document.title) {
         var titleParts = document.title.split(/[\-\|\:\—]/);
         if (titleParts.length > 1) {
           var lastPart = titleParts[titleParts.length - 1].trim();
-          if (lastPart.length > 0 && lastPart.length < 25) {
-            brand = lastPart;
-          }
+          if (lastPart.length > 0 && lastPart.length < 25) brand = lastPart;
         }
       }
-
-      // 최후 수단: 호스트네임
       if (!brand && window.location.hostname) {
         brand = window.location.hostname.replace(/^www\./i, '').split('.')[0];
         brand = brand.charAt(0).toUpperCase() + brand.slice(1);
       }
 
-      // 3. 텍스트 치환 (기존 내용과 다를 때만 안전하게 교체)
+      // 3. 텍스트 안전 교체 (CLS 없음)
       var yearNode = document.querySelector('#master-footer .wf-year');
       var brandNode = document.querySelector('#master-footer .wf-brand');
+      if (yearNode && year && yearNode.textContent !== year) yearNode.textContent = year;
+      if (brandNode && brand && brandNode.textContent !== brand) brandNode.textContent = brand;
 
-      if (yearNode && year && yearNode.textContent !== year) {
-        yearNode.textContent = year;
-      }
-      if (brandNode && brand && brandNode.textContent !== brand) {
-        brandNode.textContent = brand;
-      }
-    } catch (e) {
-      // 자바스크립트 오류가 발생해도 절대 렌더링이 깨지지 않고 기본 HTML 유지
-    }
+      // 4. 모달 배경 클릭 시 닫기 지원
+      document.querySelectorAll('#master-footer .wf-dialog').forEach(function(dialog) {
+        dialog.addEventListener('click', function(e) {
+          if (e.target === dialog) dialog.close();
+        });
+      });
+    } catch (e) {}
   })();
   </script>
 </footer>
